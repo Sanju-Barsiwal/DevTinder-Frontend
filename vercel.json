@@ -1,8 +1,12 @@
 {
   "rewrites": [
     {
-      "source": "/api/(.*)",
-      "destination": "https://devtinder-backend-nu.vercel.app/api/$1"
+      "source": "/api/:path*",
+      "destination": "https://devtinder-backend-nu.vercel.app/api/:path*"
+    },
+    {
+      "source": "/(.*)",
+      "destination": "/index.html"
     }
   ]
 }
