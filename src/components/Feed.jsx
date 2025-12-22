@@ -13,15 +13,16 @@ const Feed = () => {
 
   const getfeed = async () => {
     try {
-      // Remove the early return - let it fetch even if feed exists
+      console.log('🔍 Fetching feed...');
       const res = await axios.get(BASE_URL + '/feed', {
         withCredentials: true,
       });
+      console.log('✅ Feed fetched:', res.data);
       dispatch(addFeed(res.data));
     } catch (err) {
-      console.error(err);
-      // If unauthorized, redirect to login
+      console.error('❌ Feed error:', err);
       if (err.response?.status === 401) {
+        console.log('❌ Unauthorized - redirecting to login');
         navigate('/login');
       }
     }
@@ -29,7 +30,7 @@ const Feed = () => {
 
   useEffect(() => {
     getfeed();
-  }, []);
+  }, []); // Keep empty dependency array
 
   if (!feed) return <div className="text-center my-10">Loading Feed...</div>;
   if (feed.length <= 0) return <h1 className="text-center text-xl my-10">No Users in Feed!!</h1>;
