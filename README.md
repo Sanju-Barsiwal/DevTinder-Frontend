@@ -1,18 +1,47 @@
-# React + Vite
+# DevTinder
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+DevTinder is a web application designed to connect developers with potential job opportunities and projects. It allows users to create profiles, showcase their skills, and match with companies or projects that align with their expertise.
 
-Currently, two official plugins are available:
+## Features
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) (or [oxc](https://oxc.rs) when used in [rolldown-vite](https://vite.dev/guide/rolldown)) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+- User authentication and profile management
+- Skill tagging and search functionality
+- Project and job listing
+- Matching algorithm to connect users with relevant opportunities
+- Real-time chat functionality
+- Responsive design for mobile and desktop users
 
-## React Compiler
+## Technologies Used
 
-The React Compiler is enabled on this template. See [this documentation](https://react.dev/learn/react-compiler) for more information.
+- Frontend: React, Redux, Tailwind CSS
+- Backend: Node.js, Express, MongoDB
+- Authentication: JWT, bcrypt
+- Real-time communication: Socket.io
+- Deployment: Docker, AWS
 
-Note: This will impact Vite dev & build performances.
+## AWS Frontend Deployment :
 
-## Expanding the ESLint configuration
+- Create new EC2 instance with Ubuntu Server
+- Install Node.js and MongoDB
+- Clone the DevTinder repository
+- Install dependencies using `npm install`
+- Start the server using `npm start`
+- Configure security groups to allow HTTP and WebSocket traffic
+- Set up a reverse proxy using Nginx to handle incoming requests
+- Configure SSL using Let's Encrypt for secure connections
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+## AWS Backend Deployment :
+
+- Allowed EC2 Instance Security Groups to allow listening on 3000 for backend
+- npm install pm2 -g
+- pm2 = Daemon process that runs 24 \* 7 in the background so that you can get rid of terminal
+- pm2 start npm --start
+- pm2 logs - check logs
+- pm2 flush npm - Flush the logs
+- pm2 list - List of processes
+- pm2 stop `npm` - Stop process here npm is the name of the process
+- pm2 delete `npm` - Delete the process npm
+- pm2 start npm --name "DevTinder-Backend" -- start
+- Update Nginx proxy pass to pass the API calls to localhost : 3000
+- Restart Nginx - sudo systemctl restart nginx
+- Check if the /api/feed works or not
