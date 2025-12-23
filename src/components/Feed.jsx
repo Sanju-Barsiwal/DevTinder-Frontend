@@ -13,16 +13,13 @@ const Feed = () => {
 
   const getfeed = async () => {
     try {
-      console.log('🔍 Fetching feed...');
       const res = await axios.get(BASE_URL + '/feed', {
         withCredentials: true,
       });
-      console.log('✅ Feed fetched:', res.data);
       dispatch(addFeed(res.data));
     } catch (err) {
-      console.error('❌ Feed error:', err);
+      console.error(err);
       if (err.response?.status === 401) {
-        console.log('❌ Unauthorized - redirecting to login');
         navigate('/login');
       }
     }
@@ -30,13 +27,49 @@ const Feed = () => {
 
   useEffect(() => {
     getfeed();
-  }, []); // Keep empty dependency array
+  }, []);
 
-  if (!feed) return <div className="text-center my-10">Loading Feed...</div>;
-  if (feed.length <= 0) return <h1 className="text-center text-xl my-10">No Users in Feed!!</h1>;
-  
+  if (!feed)
+    return (
+      <div style={{
+        textAlign: 'center',
+        padding: '4rem 2rem',
+        color: 'var(--text, #1a1a1a)',
+      }}>
+        Loading Feed...
+      </div>
+    );
+
+  if (feed.length <= 0)
+    return (
+      <div style={{
+        textAlign: 'center',
+        padding: '4rem 2rem',
+        color: 'var(--text, #1a1a1a)',
+      }}>
+        <h1 style={{
+          fontSize: '2rem',
+          fontWeight: '700',
+          marginBottom: '1rem',
+        }}>
+          No More Users in Feed!
+        </h1>
+        <p style={{
+          color: 'var(--text-secondary, #6c757d)',
+          fontSize: '1.125rem',
+        }}>
+          Check back later 🚀
+        </p>
+      </div>
+    );
+
   return (
-    <div className="flex justify-center my-12">
+    <div style={{
+      display: 'flex',
+      justifyContent: 'center',
+      padding: '3rem 1rem',
+      minHeight: 'calc(100vh - 200px)',
+    }}>
       <Card user={feed[0]} />
     </div>
   );

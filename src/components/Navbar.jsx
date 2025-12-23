@@ -1,14 +1,16 @@
 import axios from 'axios';
-import React from 'react';
+import React, { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Link, useNavigate } from 'react-router-dom';
 import { BASE_URL } from '../utils/constants';
-import { removeUser } from '../utils//userSlice';
+import { removeUser } from '../utils/userSlice';
+import ThemeToggle from './ThemeToggle';
 
-const Navbar = () => {
+const Navbar = ({ isDark, toggleTheme }) => {
   const user = useSelector((store) => store.user);
   const dispatch = useDispatch();
   const navigate = useNavigate();
+  const [dropdownOpen, setDropdownOpen] = useState(false);
 
   const handleLogout = async () => {
     try {
@@ -17,7 +19,7 @@ const Navbar = () => {
         {},
         {
           withCredentials: true,
-        },
+        }
       );
       dispatch(removeUser());
       return navigate('/login');
@@ -25,50 +27,194 @@ const Navbar = () => {
       console.error(err);
     }
   };
+
   return (
-    <div className="navbar bg-base-300 shadow-sm">
-      <div className="flex-1">
-        <Link to={'/'} className="btn btn-ghost text-xl">
+    <nav style={{
+      background: 'var(--card-bg, #ffffff)',
+      borderBottom: '1px solid var(--border, #e5e7eb)',
+      padding: '1rem 2rem',
+      display: 'flex',
+      justifyContent: 'space-between',
+      alignItems: 'center',
+      boxShadow: '0 2px 8px var(--shadow, rgba(0, 0, 0, 0.1))',
+    }}>
+      <Link
+        to={'/'}
+        style={{
+          textDecoration: 'none',
+          display: 'flex',
+          alignItems: 'center',
+          gap: '0.5rem',
+        }}
+      >
+        <span style={{ fontSize: '1.5rem' }}>💻</span>
+        <h1 style={{
+          fontSize: '1.75rem',
+          fontWeight: '800',
+          backgroundImage: 'linear-gradient(135deg, #6366f1 0%, #ec4899 100%)',
+          WebkitBackgroundClip: 'text',
+          WebkitTextFillColor: 'transparent',
+          backgroundClip: 'text',
+          margin: 0,
+        }}>
           DevTinder
-        </Link>
-      </div>
+        </h1>
+      </Link>
+
       {user && (
-        <div className="flex justify-center gap-2">
-          <h2>Welcome, {user.firstName}</h2>
-          <div className="dropdown dropdown-end">
-            <div
-              tabIndex={0}
-              role="button"
-              className="btn btn-ghost btn-circle avatar"
-            >
-              <div className="w-10 rounded-full">
-                <img alt="Tailwind CSS Navbar component" src={user.photoUrl} />
-              </div>
-            </div>
-            <ul
-              tabIndex="-1"
-              className="menu menu-sm dropdown-content bg-base-100 rounded-box z-1 mt-3 w-52 p-2 shadow"
-            >
-              <li>
-                <Link to={'/profile'} className="justify-between">
-                  Profile
-                  <span className="badge">New</span>
+        <div style={{
+          display: 'flex',
+          alignItems: 'center',
+          gap: '1.5rem',
+        }}>
+          <ThemeToggle isDark={isDark} toggleTheme={toggleTheme} />
+          
+          <span style={{
+            color: 'var(--text, #1a1a1a)',
+            fontWeight: '500',
+          }}>
+            Welcome, {user.firstName}
+          </span>
+
+          <div style={{ position: 'relative' }}>
+            <img
+              src={user.photoUrl}
+              alt={user.firstName}
+              onClick={() => setDropdownOpen(!dropdownOpen)}
+              style={{
+                width: '45px',
+                height: '45px',
+                borderRadius: '50%',
+                cursor: 'pointer',
+                border: '3px solid var(--primary, #6366f1)',
+                objectFit: 'cover',
+              }}
+            />
+
+            {dropdownOpen && (
+              <div style={{
+                position: 'absolute',
+                top: '60px',
+                right: '0',
+                background: 'var(--card-bg, #ffffff)',
+                border: '1px solid var(--border, #e5e7eb)',
+                borderRadius: '12px',
+                minWidth: '200px',
+                boxShadow: '0 8px 24px var(--shadow, rgba(0, 0, 0, 0.1))',
+                zIndex: 1000,
+                overflow: 'hidden',
+              }}>
+                <Link
+                  to={'/profile'}
+                  onClick={() => setDropdownOpen(false)}
+                  style={{
+                    display: 'flex',
+                    justifyContent: 'space-between',
+                    alignItems: 'center',
+                    padding: '0.875rem 1.25rem',
+                    color: 'var(--text, #1a1a1a)',
+                    textDecoration: 'none',
+                    borderBottom: '1px solid var(--border, #e5e7eb)',
+                    cursor: 'pointer',
+                    transition: 'all 0.2s ease',
+                  }}
+                  onMouseEnter={(e) => {
+                    e.target.style.background = 'var(--primary, #6366f1)';
+                    e.target.style.color = '#fff';
+                  }}
+                  onMouseLeave={(e) => {
+                    e.target.style.background = 'transparent';
+                    e.target.style.color = 'var(--text, #1a1a1a)';
+                  }}
+                >
+                  <span>Profile</span>
+                  <span style={{
+                    background: 'linear-gradient(135deg, #6366f1 0%, #ec4899 100%)',
+                    color: '#fff',
+                    padding: '0.125rem 0.5rem',
+                    borderRadius: '12px',
+                    fontSize: '0.75rem',
+                    fontWeight: '600',
+                  }}>
+                    New
+                  </span>
                 </Link>
-              </li>
-              <li>
-                <Link to={'/connections'}>Connections</Link>
-              </li>
-              <li>
-                <Link to={'/requests'}>Requests</Link>
-              </li>
-              <li>
-                <a onClick={handleLogout}>Logout</a>
-              </li>
-            </ul>
+
+                <Link
+                  to={'/connections'}
+                  onClick={() => setDropdownOpen(false)}
+                  style={{
+                    display: 'block',
+                    padding: '0.875rem 1.25rem',
+                    color: 'var(--text, #1a1a1a)',
+                    textDecoration: 'none',
+                    borderBottom: '1px solid var(--border, #e5e7eb)',
+                    cursor: 'pointer',
+                    transition: 'all 0.2s ease',
+                  }}
+                  onMouseEnter={(e) => {
+                    e.target.style.background = 'var(--primary, #6366f1)';
+                    e.target.style.color = '#fff';
+                  }}
+                  onMouseLeave={(e) => {
+                    e.target.style.background = 'transparent';
+                    e.target.style.color = 'var(--text, #1a1a1a)';
+                  }}
+                >
+                  Connections
+                </Link>
+
+                <Link
+                  to={'/requests'}
+                  onClick={() => setDropdownOpen(false)}
+                  style={{
+                    display: 'block',
+                    padding: '0.875rem 1.25rem',
+                    color: 'var(--text, #1a1a1a)',
+                    textDecoration: 'none',
+                    borderBottom: '1px solid var(--border, #e5e7eb)',
+                    cursor: 'pointer',
+                    transition: 'all 0.2s ease',
+                  }}
+                  onMouseEnter={(e) => {
+                    e.target.style.background = 'var(--primary, #6366f1)';
+                    e.target.style.color = '#fff';
+                  }}
+                  onMouseLeave={(e) => {
+                    e.target.style.background = 'transparent';
+                    e.target.style.color = 'var(--text, #1a1a1a)';
+                  }}
+                >
+                  Requests
+                </Link>
+
+                <div
+                  onClick={() => {
+                    handleLogout();
+                    setDropdownOpen(false);
+                  }}
+                  style={{
+                    padding: '0.875rem 1.25rem',
+                    color: '#ef4444',
+                    cursor: 'pointer',
+                    fontWeight: '600',
+                    transition: 'all 0.2s ease',
+                  }}
+                  onMouseEnter={(e) => {
+                    e.target.style.background = '#fee2e2';
+                  }}
+                  onMouseLeave={(e) => {
+                    e.target.style.background = 'transparent';
+                  }}
+                >
+                  Logout
+                </div>
+              </div>
+            )}
           </div>
         </div>
       )}
-    </div>
+    </nav>
   );
 };
 

@@ -7,44 +7,44 @@ import axios from 'axios';
 import { useDispatch, useSelector } from 'react-redux';
 import { addUser } from '../utils/userSlice';
 
-const Body = () => {
+const Body = ({ isDark, toggleTheme }) => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const userData = useSelector((store) => store.user);
-
+  
   const fetchUser = async () => {
-    // Don't fetch if we already have user data
-    if (userData) {
-      console.log('✅ User data already loaded');
-      return;
-    }
-
     try {
-      console.log('🔍 Fetching user profile...');
+      if (userData) return;
       const res = await axios.get(BASE_URL + '/profile/view', {
         withCredentials: true,
       });
-      console.log('✅ User profile fetched:', res.data);
       dispatch(addUser(res.data));
     } catch (err) {
-      console.error('❌ Profile fetch error:', err);
-      if (err.response?.status === 401) {
-        console.log('❌ Unauthorized - redirecting to login');
+      if (err.response === 401) {
         navigate('/login');
       }
+      console.error(err);
     }
   };
-
+  
   useEffect(() => {
     fetchUser();
-  }, []); // Empty dependency array
-
+  }, []);
+  
   return (
-    <div className="min-h-screen flex flex-col">
-      <Navbar />
-      <main className="flex-grow">
+    <div style={{ 
+      minHeight: '100vh', 
+      display: 'flex', 
+      flexDirection: 'column',
+      background: 'var(--bg-color, #f8f9fa)',
+      transition: 'all 0.3s ease'
+    }}>
+      <Navbar isDark={isDark} toggleTheme={toggleTheme} />
+      
+      <main style={{ flexGrow: 1 }}>
         <Outlet />
       </main>
+      
       <Footer />
     </div>
   );

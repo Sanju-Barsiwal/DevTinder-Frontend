@@ -1,21 +1,46 @@
-import './App.css';
-import Body from './components/Body';
-import { BrowserRouter, Route, Routes } from 'react-router-dom';
-import Navbar from './components/Navbar';
-import Login from './components/Login';
-import Profile from './components/Profile';
+import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import { Provider } from 'react-redux';
-import appStore from './utils/appStore';
+import { useState, useEffect } from 'react';
+import Body from './components/Body';
+import Login from './components/Login';
 import Feed from './components/Feed';
+import Profile from './components/Profile';
 import Connections from './components/Connections';
 import Requests from './components/Requests';
+import appStore from './utils/appStore';
+import {
+  getInitialTheme,
+  saveTheme,
+  applyTheme,
+  toggleTheme as toggleThemeUtil,
+} from './utils/theme';
+import './App.css';
+import './styles.css';
 
 function App() {
+  const [theme, setTheme] = useState(getInitialTheme());
+
+  // Apply theme on mount and when theme changes
+  useEffect(() => {
+    applyTheme(theme);
+    saveTheme(theme);
+  }, [theme]);
+
+  // Handle theme toggle
+  const handleToggleTheme = () => {
+    setTheme((currentTheme) => toggleThemeUtil(currentTheme));
+  };
+
+  const isDark = theme === 'dark';
+
   return (
     <Provider store={appStore}>
-      <BrowserRouter basename="/">
+      <BrowserRouter>
         <Routes>
-          <Route path="/" element={<Body />}>
+          <Route
+            path="/"
+            element={<Body isDark={isDark} toggleTheme={handleToggleTheme} />}
+          >
             <Route path="/" element={<Feed />} />
             <Route path="/login" element={<Login />} />
             <Route path="/profile" element={<Profile />} />

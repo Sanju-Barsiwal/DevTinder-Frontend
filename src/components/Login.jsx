@@ -12,6 +12,7 @@ const Login = () => {
   const [lastName, setLastName] = useState('');
   const [isLoggedIn, setIsLoggedIn] = useState(true);
   const [error, setError] = useState('');
+  const [showPassword, setShowPassword] = useState(false);
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
@@ -50,207 +51,234 @@ const Login = () => {
       console.error(err);
     }
   };
+
+  const inputStyle = {
+    width: '100%',
+    padding: '0.875rem 3rem',
+    border: '2px solid var(--border, #e5e7eb)',
+    borderRadius: '12px',
+    fontSize: '1rem',
+    color: 'var(--text, #1a1a1a)',
+    background: 'var(--bg-color, #f8f9fa)',
+    outline: 'none',
+    transition: 'border-color 0.3s ease',
+  };
+
+  const labelStyle = {
+    display: 'block',
+    marginBottom: '0.5rem',
+    color: 'var(--text, #1a1a1a)',
+    fontWeight: '600',
+  };
+
   return (
-   
-    <div className="flex justify-center my-10">
-      <div className="card bg-base-300 w-96 shadow-xl">
-        <div className="card-body">
-          <h2 className="card-title justify-center text-2xl mb-4">
-            {isLoggedIn ? 'Login' : 'Sign Up'}
-          </h2>
+    <div style={{
+      minHeight: 'calc(100vh - 80px)',
+      display: 'flex',
+      alignItems: 'center',
+      justifyContent: 'center',
+      padding: '2rem',
+    }}>
+      <div style={{
+        background: 'var(--card-bg, #ffffff)',
+        borderRadius: '24px',
+        padding: '2.5rem',
+        width: '100%',
+        maxWidth: '480px',
+        boxShadow: '0 20px 60px var(--shadow, rgba(0, 0, 0, 0.1))',
+        border: '1px solid var(--border, #e5e7eb)',
+      }}>
+        <h2 style={{
+          fontSize: '2.25rem',
+          fontWeight: '800',
+          backgroundImage: 'linear-gradient(135deg, #6366f1 0%, #ec4899 100%)',
+          WebkitBackgroundClip: 'text',
+          WebkitTextFillColor: 'transparent',
+          backgroundClip: 'text',
+          marginBottom: '2rem',
+          textAlign: 'center',
+        }}>
+          {isLoggedIn ? 'Welcome Back' : 'Join DevTinder'}
+        </h2>
 
-          {!isLoggedIn && (
-            <>
-              {/* First Name */}
-              <label className="form-control w-full">
-                <div className="label">
-                  <span className="label-text">First Name</span>
-                </div>
-                <label className="input input-bordered flex items-center gap-2">
-                  <svg
-                    className="h-4 w-4 opacity-70"
-                    xmlns="http://www.w3.org/2000/svg"
-                    viewBox="0 0 24 24"
-                    fill="none"
-                    stroke="currentColor"
-                  >
-                    <path
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      strokeWidth="2"
-                      d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2"
-                    />
-                    <circle cx="12" cy="7" r="4" />
-                  </svg>
-                  <input
-                    type="text"
-                    className="grow"
-                    placeholder="First Name"
-                    value={firstName}
-                    onChange={(e) => setFirstName(e.target.value)}
-                    required
-                  />
-                </label>
-                <div className="label">
-                  <span className="label-text-alt text-gray-500">
-                    3-30 characters
-                  </span>
-                </div>
-              </label>
-
-              {/* Last Name */}
-              <label className="form-control w-full">
-                <div className="label">
-                  <span className="label-text">Last Name</span>
-                </div>
-                <label className="input input-bordered flex items-center gap-2">
-                  <svg
-                    className="h-4 w-4 opacity-70"
-                    xmlns="http://www.w3.org/2000/svg"
-                    viewBox="0 0 24 24"
-                    fill="none"
-                    stroke="currentColor"
-                  >
-                    <path
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      strokeWidth="2"
-                      d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2"
-                    />
-                    <circle cx="12" cy="7" r="4" />
-                  </svg>
-                  <input
-                    type="text"
-                    className="grow"
-                    placeholder="Last Name"
-                    value={lastName}
-                    onChange={(e) => setLastName(e.target.value)}
-                    required
-                  />
-                </label>
-                <div className="label">
-                  <span className="label-text-alt text-gray-500">
-                    3-30 characters
-                  </span>
-                </div>
-              </label>
-            </>
-          )}
-
-          {/* Email */}
-          <label className="form-control w-full">
-            <div className="label">
-              <span className="label-text">Email</span>
-            </div>
-            <label className="input input-bordered flex items-center gap-2">
-              <svg
-                className="h-4 w-4 opacity-70"
-                xmlns="http://www.w3.org/2000/svg"
-                viewBox="0 0 24 24"
-                fill="none"
-                stroke="currentColor"
-              >
-                <rect
-                  width="20"
-                  height="16"
-                  x="2"
-                  y="4"
-                  rx="2"
-                  strokeWidth="2"
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                />
-                <path
-                  strokeWidth="2"
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"
-                />
-              </svg>
-              <input
-                type="email"
-                className="grow"
-                placeholder="mail@site.com"
-                value={emailId}
-                onChange={(e) => setEmailId(e.target.value)}
-                required
-              />
-            </label>
-          </label>
-
-          {/* Password */}
-          <label className="form-control w-full">
-            <div className="label">
-              <span className="label-text">Password</span>
-            </div>
-            <label className="input input-bordered flex items-center gap-2">
-              <svg
-                className="h-4 w-4 opacity-70"
-                xmlns="http://www.w3.org/2000/svg"
-                viewBox="0 0 24 24"
-                fill="none"
-                stroke="currentColor"
-              >
-                <path
-                  strokeWidth="2"
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  d="M2.586 17.414A2 2 0 0 0 2 18.828V21a1 1 0 0 0 1 1h3a1 1 0 0 0 1-1v-1a1 1 0 0 1 1-1h1a1 1 0 0 0 1-1v-1a1 1 0 0 1 1-1h.172a2 2 0 0 0 1.414-.586l.814-.814a6.5 6.5 0 1 0-4-4z"
-                />
-                <circle cx="16.5" cy="7.5" r=".5" fill="currentColor" />
-              </svg>
-              <input
-                type="password"
-                className="grow"
-                placeholder="Password"
-                value={password}
-                onChange={(e) => setPassword(e.target.value)}
-                required
-              />
-            </label>
-            {!isLoggedIn && (
-              <div className="label">
-                <span className="label-text-alt text-gray-500">
-                  Min 8 chars with number, uppercase & lowercase
+        {!isLoggedIn && (
+          <>
+            <div style={{ marginBottom: '1.5rem' }}>
+              <label style={labelStyle}>First Name</label>
+              <div style={{ position: 'relative' }}>
+                <span style={{
+                  position: 'absolute',
+                  left: '1rem',
+                  top: '50%',
+                  transform: 'translateY(-50%)',
+                  fontSize: '1.25rem',
+                }}>
+                  👤
                 </span>
+                <input
+                  type="text"
+                  required
+                  placeholder="John"
+                  minLength="3"
+                  maxLength="30"
+                  value={firstName}
+                  onChange={(e) => setFirstName(e.target.value)}
+                  style={inputStyle}
+                />
               </div>
-            )}
-          </label>
-
-          {/* Error Message */}
-          {error && (
-            <div className="alert alert-error mt-2">
-              <span>{error}</span>
             </div>
-          )}
 
-          {/* Submit Button */}
-          <div className="card-actions justify-center mt-4">
+            <div style={{ marginBottom: '1.5rem' }}>
+              <label style={labelStyle}>Last Name</label>
+              <div style={{ position: 'relative' }}>
+                <span style={{
+                  position: 'absolute',
+                  left: '1rem',
+                  top: '50%',
+                  transform: 'translateY(-50%)',
+                  fontSize: '1.25rem',
+                }}>
+                  👤
+                </span>
+                <input
+                  type="text"
+                  required
+                  placeholder="Doe"
+                  minLength="3"
+                  maxLength="30"
+                  value={lastName}
+                  onChange={(e) => setLastName(e.target.value)}
+                  style={inputStyle}
+                />
+              </div>
+            </div>
+          </>
+        )}
+
+        <div style={{ marginBottom: '1.5rem' }}>
+          <label style={labelStyle}>Email</label>
+          <div style={{ position: 'relative' }}>
+            <span style={{
+              position: 'absolute',
+              left: '1rem',
+              top: '50%',
+              transform: 'translateY(-50%)',
+              fontSize: '1.25rem',
+            }}>
+              ✉️
+            </span>
+            <input
+              type="email"
+              placeholder="mail@example.com"
+              required
+              value={emailId}
+              onChange={(e) => setEmailId(e.target.value)}
+              style={inputStyle}
+            />
+          </div>
+        </div>
+
+        <div style={{ marginBottom: '2rem' }}>
+          <label style={labelStyle}>Password</label>
+          <div style={{ position: 'relative' }}>
+            <span style={{
+              position: 'absolute',
+              left: '1rem',
+              top: '50%',
+              transform: 'translateY(-50%)',
+              fontSize: '1.25rem',
+            }}>
+              🔒
+            </span>
+            <input
+              type={showPassword ? 'text' : 'password'}
+              required
+              value={password}
+              placeholder="••••••••"
+              minLength="8"
+              pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}"
+              onChange={(e) => setPassword(e.target.value)}
+              style={inputStyle}
+            />
             <button
-              className="btn btn-primary w-full"
-              onClick={isLoggedIn ? handleLogin : handleSignUp}
+              type="button"
+              onClick={() => setShowPassword(!showPassword)}
+              style={{
+                position: 'absolute',
+                right: '1rem',
+                top: '50%',
+                transform: 'translateY(-50%)',
+                background: 'transparent',
+                border: 'none',
+                cursor: 'pointer',
+                fontSize: '1.25rem',
+                padding: '0.25rem',
+              }}
             >
-              {isLoggedIn ? 'Login' : 'Sign Up'}
+              {showPassword ? '👁️' : '👁️‍🗨️'}
             </button>
           </div>
-
-          {/* Toggle Login/Signup */}
-          <p
-            className="text-center mt-4 cursor-pointer hover:underline"
-            onClick={() => {
-              setIsLoggedIn((value) => !value);
-              setError('');
-            }}
-          >
-            {isLoggedIn
-              ? "New User? Sign Up here"
-              : "Existing User? Login here"}
-          </p>
         </div>
+
+        {error && (
+          <p style={{
+            color: '#ef4444',
+            marginBottom: '1rem',
+            padding: '0.75rem',
+            background: '#fee2e2',
+            borderRadius: '8px',
+          }}>
+            {error}
+          </p>
+        )}
+
+        <button
+          onClick={isLoggedIn ? handleLogin : handleSignUp}
+          style={{
+            width: '100%',
+            padding: '1rem',
+            border: 'none',
+            background: 'linear-gradient(135deg, #6366f1 0%, #ec4899 100%)',
+            color: '#fff',
+            borderRadius: '12px',
+            fontSize: '1.125rem',
+            fontWeight: '700',
+            cursor: 'pointer',
+            marginBottom: '1.5rem',
+            transition: 'transform 0.2s ease',
+          }}
+          onMouseEnter={(e) => {
+            e.target.style.transform = 'translateY(-2px)';
+          }}
+          onMouseLeave={(e) => {
+            e.target.style.transform = 'translateY(0)';
+          }}
+        >
+          {isLoggedIn ? 'Sign In' : 'Create Account'}
+        </button>
+
+        <div style={{
+          textAlign: 'center',
+          color: 'var(--text-secondary, #6c757d)',
+          marginBottom: '1rem',
+        }}>
+          OR
+        </div>
+
+        <p
+          onClick={() => setIsLoggedIn((value) => !value)}
+          style={{
+            textAlign: 'center',
+            color: 'var(--primary, #6366f1)',
+            cursor: 'pointer',
+            fontWeight: '600',
+          }}
+        >
+          {isLoggedIn ? "Don't have an account? Sign Up" : 'Already have an account? Sign In'}
+        </p>
       </div>
     </div>
   );
 };
-
 
 export default Login;
