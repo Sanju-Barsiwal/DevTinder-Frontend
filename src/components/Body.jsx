@@ -40,7 +40,6 @@ const Body = ({ isDark, toggleTheme }) => {
       transition: 'all 0.3s ease'
     }}>
       <Navbar isDark={isDark} toggleTheme={toggleTheme} />
-      
       <main style={{ flexGrow: 1 }}>
         <Outlet />
       </main>
