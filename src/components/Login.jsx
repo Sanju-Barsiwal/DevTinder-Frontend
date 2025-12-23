@@ -72,32 +72,39 @@ const Login = () => {
   };
 
   return (
-    <div style={{
-      minHeight: 'calc(100vh - 80px)',
-      display: 'flex',
-      alignItems: 'center',
-      justifyContent: 'center',
-      padding: '2rem',
-    }}>
-      <div style={{
-        background: 'var(--card-bg, #ffffff)',
-        borderRadius: '24px',
-        padding: '2.5rem',
-        width: '100%',
-        maxWidth: '480px',
-        boxShadow: '0 20px 60px var(--shadow, rgba(0, 0, 0, 0.1))',
-        border: '1px solid var(--border, #e5e7eb)',
-      }}>
-        <h2 style={{
-          fontSize: '2.25rem',
-          fontWeight: '800',
-          backgroundImage: 'linear-gradient(135deg, #6366f1 0%, #ec4899 100%)',
-          WebkitBackgroundClip: 'text',
-          WebkitTextFillColor: 'transparent',
-          backgroundClip: 'text',
-          marginBottom: '2rem',
-          textAlign: 'center',
-        }}>
+    <div
+      style={{
+        minHeight: 'calc(100vh - 80px)',
+        display: 'flex',
+        alignItems: 'center',
+        justifyContent: 'center',
+        padding: '2rem',
+      }}
+    >
+      <div
+        style={{
+          background: 'var(--card-bg, #ffffff)',
+          borderRadius: '24px',
+          padding: '2.5rem',
+          width: '100%',
+          maxWidth: '480px',
+          boxShadow: '0 20px 60px var(--shadow, rgba(0, 0, 0, 0.1))',
+          border: '1px solid var(--border, #e5e7eb)',
+        }}
+      >
+        <h2
+          style={{
+            fontSize: '2.25rem',
+            fontWeight: '800',
+            backgroundImage:
+              'linear-gradient(135deg, #6366f1 0%, #ec4899 100%)',
+            WebkitBackgroundClip: 'text',
+            WebkitTextFillColor: 'transparent',
+            backgroundClip: 'text',
+            marginBottom: '2rem',
+            textAlign: 'center',
+          }}
+        >
           {isLoggedIn ? 'Welcome Back' : 'Join DevTinder'}
         </h2>
 
@@ -106,13 +113,15 @@ const Login = () => {
             <div style={{ marginBottom: '1.5rem' }}>
               <label style={labelStyle}>First Name</label>
               <div style={{ position: 'relative' }}>
-                <span style={{
-                  position: 'absolute',
-                  left: '1rem',
-                  top: '50%',
-                  transform: 'translateY(-50%)',
-                  fontSize: '1.25rem',
-                }}>
+                <span
+                  style={{
+                    position: 'absolute',
+                    left: '1rem',
+                    top: '50%',
+                    transform: 'translateY(-50%)',
+                    fontSize: '1.25rem',
+                  }}
+                >
                   👤
                 </span>
                 <input
@@ -131,13 +140,15 @@ const Login = () => {
             <div style={{ marginBottom: '1.5rem' }}>
               <label style={labelStyle}>Last Name</label>
               <div style={{ position: 'relative' }}>
-                <span style={{
-                  position: 'absolute',
-                  left: '1rem',
-                  top: '50%',
-                  transform: 'translateY(-50%)',
-                  fontSize: '1.25rem',
-                }}>
+                <span
+                  style={{
+                    position: 'absolute',
+                    left: '1rem',
+                    top: '50%',
+                    transform: 'translateY(-50%)',
+                    fontSize: '1.25rem',
+                  }}
+                >
                   👤
                 </span>
                 <input
@@ -158,13 +169,15 @@ const Login = () => {
         <div style={{ marginBottom: '1.5rem' }}>
           <label style={labelStyle}>Email</label>
           <div style={{ position: 'relative' }}>
-            <span style={{
-              position: 'absolute',
-              left: '1rem',
-              top: '50%',
-              transform: 'translateY(-50%)',
-              fontSize: '1.25rem',
-            }}>
+            <span
+              style={{
+                position: 'absolute',
+                left: '1rem',
+                top: '50%',
+                transform: 'translateY(-50%)',
+                fontSize: '1.25rem',
+              }}
+            >
               ✉️
             </span>
             <input
@@ -181,13 +194,15 @@ const Login = () => {
         <div style={{ marginBottom: '2rem' }}>
           <label style={labelStyle}>Password</label>
           <div style={{ position: 'relative' }}>
-            <span style={{
-              position: 'absolute',
-              left: '1rem',
-              top: '50%',
-              transform: 'translateY(-50%)',
-              fontSize: '1.25rem',
-            }}>
+            <span
+              style={{
+                position: 'absolute',
+                left: '1rem',
+                top: '50%',
+                transform: 'translateY(-50%)',
+                fontSize: '1.25rem',
+              }}
+            >
               🔒
             </span>
             <input
@@ -221,13 +236,15 @@ const Login = () => {
         </div>
 
         {error && (
-          <p style={{
-            color: '#ef4444',
-            marginBottom: '1rem',
-            padding: '0.75rem',
-            background: '#fee2e2',
-            borderRadius: '8px',
-          }}>
+          <p
+            style={{
+              color: '#ef4444',
+              marginBottom: '1rem',
+              padding: '0.75rem',
+              background: '#fee2e2',
+              borderRadius: '8px',
+            }}
+          >
             {error}
           </p>
         )}
@@ -257,11 +274,13 @@ const Login = () => {
           {isLoggedIn ? 'Sign In' : 'Create Account'}
         </button>
 
-        <div style={{
-          textAlign: 'center',
-          color: 'var(--text-secondary, #6c757d)',
-          marginBottom: '1rem',
-        }}>
+        <div
+          style={{
+            textAlign: 'center',
+            color: 'var(--text-secondary, #6c757d)',
+            marginBottom: '1rem',
+          }}
+        >
           OR
         </div>
 
@@ -274,7 +293,9 @@ const Login = () => {
             fontWeight: '600',
           }}
         >
-          {isLoggedIn ? "Don't have an account? Sign Up" : 'Already have an account? Sign In'}
+          {isLoggedIn
+            ? "Don't have an account? Sign Up"
+            : 'Already have an account? Sign In'}
         </p>
       </div>
     </div>
